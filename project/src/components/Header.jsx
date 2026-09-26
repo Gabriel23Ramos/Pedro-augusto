@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 
 const links = [
   { href: "#sobre", label: "Sobre" },
@@ -60,7 +60,7 @@ export default function Header() {
             rel="noreferrer"
             className="flex items-center gap-2 rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-teal-bright hover:scale-[1.03] active:scale-95"
           >
-            <Phone size={15} strokeWidth={2.4} />
+            <MessageCircle size={15} strokeWidth={2.4} />
             (84) 99668-5070
           </a>
         </nav>
@@ -90,7 +90,7 @@ export default function Header() {
             href="https://wa.me/5584996685070"
             className="flex items-center justify-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-white"
           >
-            <Phone size={15} /> (84) 99668-5070
+            <MessageCircle size={15} /> (84) 99668-5070
           </a>
         </div>
       )}

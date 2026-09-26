@@ -1,4 +1,4 @@
-import { Phone, MapPin, Home } from "lucide-react";
+import { MessageCircle, MapPin, Home } from "lucide-react";
 
 function InstagramIcon({ size = 16, className = "" }) {
   return (
@@ -48,7 +48,7 @@ export default function Footer() {
                 className="h-9 w-9 grid place-items-center rounded-full border border-white/15 hover:border-teal-bright hover:text-teal-bright transition-colors"
                 aria-label="WhatsApp"
               >
-                <Phone size={16} />
+                <MessageCircle size={16} />
               </a>
               <a
                 href="https://www.instagram.com/pa.massoterapeuta/"
@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
 
           {/* Addresses */}
-          <div className="max-w-xs">
+          <div id="localizacao" className="max-w-xs scroll-mt-24">
             <p className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] text-white/40 mb-3">
               <Home size={13} className="text-teal-bright" />
               ATENDE TAMBÉM A DOMICÍLIO
