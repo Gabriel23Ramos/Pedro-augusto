@@ -65,7 +65,7 @@ export default function Hero() {
         <div className="flex md:hidden flex-col items-center text-center pb-14">
           <img
             src={pedro}
-            alt="Pedro Augusto, fisioterapeuta"
+            alt="Pedro Augusto, massoterapeuta"
             style={photoMask}
             className="relative w-40 h-auto mb-5"
           />
@@ -73,7 +73,7 @@ export default function Hero() {
           <LocationBadge className="mb-4" />
 
           <p className="text-sand tracking-[0.16em] text-[10px] font-semibold mb-2">
-            FISIOTERAPIA &amp; TERAPIAS MANUAIS
+            MASSOTERAPIA &amp; TERAPIAS MANUAIS
           </p>
           <h1 className="font-display text-[1.65rem] leading-[1.18] text-white px-2">
             Relaxamento e cuidado{" "}
@@ -81,7 +81,7 @@ export default function Hero() {
           </h1>
           <p className="mt-4 text-white/70 text-sm leading-relaxed max-w-xs">
             Sessões pensadas para aliviar tensões, devolver mobilidade e trazer
-            leveza ao seu corpo — com técnicas manuais e terapia de calor.
+            leveza ao seu corpo, com técnicas manuais e terapia de calor.
           </p>
 
           <div className="mt-7 flex flex-col items-center gap-3 w-full">
@@ -96,7 +96,7 @@ export default function Hero() {
           <div>
             <LocationBadge className="mb-5" />
             <p className="text-sand tracking-[0.25em] text-xs font-semibold mb-5">
-              FISIOTERAPIA &amp; TERAPIAS MANUAIS
+              MASSOTERAPIA &amp; TERAPIAS MANUAIS
             </p>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.08] text-white">
               Relaxamento e cuidado
@@ -105,7 +105,7 @@ export default function Hero() {
             </h1>
             <p className="mt-6 text-white/70 text-lg max-w-md leading-relaxed">
               Sessões pensadas para aliviar tensões, devolver mobilidade e trazer
-              leveza ao seu corpo — com técnicas manuais e terapia de calor.
+              leveza ao seu corpo, com técnicas manuais e terapia de calor.
             </p>
 
             <div className="mt-9">
@@ -117,7 +117,7 @@ export default function Hero() {
           <div className="relative flex justify-end">
             <img
               src={pedro}
-              alt="Pedro Augusto, fisioterapeuta"
+              alt="Pedro Augusto, massoterapeuta"
               style={photoMask}
               className="relative z-10 w-72 md:w-[22rem] h-auto"
             />

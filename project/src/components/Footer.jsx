@@ -22,8 +22,8 @@ function InstagramIcon({ size = 16, className = "" }) {
 }
 
 const addresses = [
-  "Rua das Flores, 694 — Nova Parnamirim, Parnamirim",
-  "Av. Paulistana, 2303A — Zona Norte, Natal",
+  "Rua das Flores, 694, Nova Parnamirim, Parnamirim",
+  "Av. Paulistana, 2303A, Zona Norte, Natal",
 ];
 
 export default function Footer() {
@@ -37,7 +37,7 @@ export default function Footer() {
               Pedro Augusto
             </span>
             <span className="mt-1 text-[10px] font-semibold tracking-[0.32em] text-teal-bright">
-              FISIOTERAPEUTA
+              MASSOTERAPEUTA
             </span>
 
             <div className="flex items-center gap-3 mt-6">
@@ -88,7 +88,7 @@ export default function Footer() {
         </div>
 
         <p className="pt-6 text-xs text-white/35">
-          © {new Date().getFullYear()} Pedro Augusto Fisioterapeuta. Todos os direitos reservados.
+          © {new Date().getFullYear()} Pedro Augusto Massoterapeuta. Todos os direitos reservados.
         </p>
       </div>
     </footer>

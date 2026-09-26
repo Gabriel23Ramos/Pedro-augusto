@@ -20,8 +20,8 @@ export default function About() {
             Sou Pedro Augusto, massoterapeuta, e trabalho com técnicas manuais
             e terapias complementares para aliviar dores, reduzir o estresse
             e devolver a sensação de leveza ao dia a dia. Cada sessão é
-            conduzida com atenção aos detalhes — do ambiente ao ritmo das
-            técnicas — para que o atendimento seja, além de eficaz, um
+            conduzida com atenção aos detalhes, do ambiente ao ritmo das
+            técnicas, para que o atendimento seja, além de eficaz, um
             momento só seu.
           </p>
         </div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Clock, MessageCircle } from "lucide-react";
 
 const WEEKDAY_LABELS = ["D", "S", "T", "Q", "Q", "S", "S"];
@@ -27,6 +27,7 @@ export default function BookingCalendar() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [name, setName] = useState("");
+  const timeSlotsRef = useRef(null);
 
   const weeks = useMemo(() => {
     const firstOfMonth = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
@@ -129,6 +130,16 @@ export default function BookingCalendar() {
                       onClick={() => {
                         setSelectedDate(date);
                         setSelectedTime(null);
+                        // On mobile/tablet the time-slots panel sits below the
+                        // calendar, so bring it into view automatically.
+                        if (window.innerWidth < 1024 && timeSlotsRef.current) {
+                          setTimeout(() => {
+                            timeSlotsRef.current?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          }, 60);
+                        }
                       }}
                       className={`h-10 w-10 rounded-full text-sm font-medium transition-colors
                         ${selected ? "bg-teal text-white" : ""}
@@ -149,11 +160,14 @@ export default function BookingCalendar() {
           </div>
 
           {/* Time slots + form */}
-          <div className="bg-navy rounded-2xl p-6 md:p-8 text-white flex flex-col">
+          <div
+            ref={timeSlotsRef}
+            className="bg-navy rounded-2xl p-6 md:p-8 text-white flex flex-col scroll-mt-28"
+          >
             <p className="flex items-center gap-2 text-sm font-semibold text-white/80 mb-4">
               <Clock size={16} className="text-teal-bright" />
               {selectedDate
-                ? `Horários — ${selectedDate.getDate()} de ${MONTH_LABELS[selectedDate.getMonth()]}`
+                ? `Horários para ${selectedDate.getDate()} de ${MONTH_LABELS[selectedDate.getMonth()]}`
                 : "Selecione uma data"}
             </p>
 

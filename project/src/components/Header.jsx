@@ -38,7 +38,7 @@ export default function Header() {
               scrolled ? "text-teal" : "text-teal-bright"
             }`}
           >
-            FISIOTERAPEUTA
+            MASSOTERAPEUTA
           </span>
         </a>
 
