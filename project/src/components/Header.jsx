@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
-import logo from "../assets/logo-horizontal.png";
 
 const links = [
   { href: "#sobre", label: "Sobre" },
@@ -26,8 +25,21 @@ export default function Header() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-20">
-        <a href="#topo" className="flex items-center h-10">
-          <img src={logo} alt="Pedro Augusto Massoterapeuta" className="h-9 w-auto" />
+        <a href="#topo" className="flex flex-col leading-none">
+          <span
+            className={`font-display text-xl md:text-[1.4rem] font-semibold tracking-wide transition-colors ${
+              scrolled ? "text-navy" : "text-white"
+            }`}
+          >
+            Pedro Augusto
+          </span>
+          <span
+            className={`mt-1 text-[10px] md:text-[11px] font-semibold tracking-[0.32em] transition-colors ${
+              scrolled ? "text-teal" : "text-teal-bright"
+            }`}
+          >
+            FISIOTERAPEUTA
+          </span>
         </a>
 
         <nav className="hidden md:flex items-center gap-9">
