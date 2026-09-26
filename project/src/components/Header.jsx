@@ -58,7 +58,7 @@ export default function Header() {
             href="https://wa.me/5584996685070"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-bright transition-colors"
+            className="flex items-center gap-2 rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-teal-bright hover:scale-[1.03] active:scale-95"
           >
             <Phone size={15} strokeWidth={2.4} />
             (84) 99668-5070

@@ -53,8 +53,13 @@ export default function Services() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
           {services.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="flex gap-4 border-t border-navy/10 pt-6">
-              <Icon className="shrink-0 text-teal mt-0.5" size={24} strokeWidth={1.8} />
+            <div
+              key={title}
+              className="group flex gap-4 border-t border-navy/10 pt-6 transition-transform hover:-translate-y-0.5"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-soft transition-colors group-hover:bg-teal group-hover:text-white text-teal">
+                <Icon size={21} strokeWidth={1.8} />
+              </span>
               <div>
                 <h3 className="font-display text-lg text-navy mb-1.5">{title}</h3>
                 <p className="text-sm text-navy/65 leading-relaxed">{text}</p>

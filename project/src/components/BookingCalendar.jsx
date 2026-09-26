@@ -192,8 +192,8 @@ export default function BookingCalendar() {
               rel="noreferrer"
               aria-disabled={!canConfirm}
               onClick={(e) => !canConfirm && e.preventDefault()}
-              className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-colors
-                ${canConfirm ? "bg-teal hover:bg-teal-bright text-white" : "bg-white/10 text-white/40 cursor-not-allowed"}
+              className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all
+                ${canConfirm ? "bg-teal hover:bg-teal-bright hover:scale-[1.02] active:scale-95 text-white shadow-lg shadow-teal/20" : "bg-white/10 text-white/40 cursor-not-allowed"}
               `}
             >
               <MessageCircle size={17} />
