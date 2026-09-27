@@ -1,13 +1,15 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Clock, Sparkles } from "lucide-react";
 import WhatsAppIcon from "./icons/WhatsAppIcon";
+import {
+  MONTH_LABELS,
+  WEEKDAY_LABELS,
+  TIME_SLOTS,
+  startOfDay,
+  formatDateKey,
+  buildMonthGrid,
+} from "../lib/schedule";
 
-const WEEKDAY_LABELS = ["D", "S", "T", "Q", "Q", "S", "S"];
-const MONTH_LABELS = [
-  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
-];
-const TIME_SLOTS = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"];
 const SERVICES = [
   "Bambuterapia",
   "Drenagem linfática",
@@ -19,18 +21,6 @@ const SERVICES = [
 ];
 const PHONE = "5584996685070";
 
-function startOfDay(d) {
-  const c = new Date(d);
-  c.setHours(0, 0, 0, 0);
-  return c;
-}
-
-// Deterministic pseudo-random "already booked" slots per day, just for a realistic preview.
-function bookedSlotsFor(date) {
-  const seed = date.getFullYear() * 372 + date.getMonth() * 31 + date.getDate();
-  return TIME_SLOTS.filter((_, i) => (seed * (i + 7)) % 5 === 0);
-}
-
 export default function BookingCalendar() {
   const today = startOfDay(new Date());
   const [cursor, setCursor] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
@@ -38,24 +28,19 @@ export default function BookingCalendar() {
   const [selectedTime, setSelectedTime] = useState(null);
   const [name, setName] = useState("");
   const [service, setService] = useState("");
+  const [schedule, setSchedule] = useState({ blockedDays: [], blockedSlots: {} });
   const timeSlotsRef = useRef(null);
 
-  const weeks = useMemo(() => {
-    const firstOfMonth = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
-    const startOffset = firstOfMonth.getDay();
-    const daysInMonth = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 0).getDate();
+  // Real availability set by Pedro in /admin — defaults to fully open
+  // (every weekday, every slot) until something gets blocked.
+  useEffect(() => {
+    fetch("/api/schedule")
+      .then((r) => r.json())
+      .then(setSchedule)
+      .catch(() => {});
+  }, []);
 
-    const cells = [];
-    for (let i = 0; i < startOffset; i++) cells.push(null);
-    for (let d = 1; d <= daysInMonth; d++) {
-      cells.push(new Date(cursor.getFullYear(), cursor.getMonth(), d));
-    }
-    while (cells.length % 7 !== 0) cells.push(null);
-
-    const rows = [];
-    for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
-    return rows;
-  }, [cursor]);
+  const weeks = useMemo(() => buildMonthGrid(cursor), [cursor]);
 
   const changeMonth = (delta) => {
     setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + delta, 1));
@@ -65,12 +50,15 @@ export default function BookingCalendar() {
     if (!date) return false;
     if (date < today) return false;
     if (date.getDay() === 0) return false; // sem atendimento aos domingos
+    if (schedule.blockedDays.includes(formatDateKey(date))) return false;
     return true;
   };
 
   const isSameDay = (a, b) => a && b && a.getTime() === b.getTime();
 
-  const bookedForSelected = selectedDate ? bookedSlotsFor(selectedDate) : [];
+  const bookedForSelected = selectedDate
+    ? schedule.blockedSlots[formatDateKey(selectedDate)] || []
+    : [];
 
   const whatsappHref = () => {
     const dateLabel = selectedDate

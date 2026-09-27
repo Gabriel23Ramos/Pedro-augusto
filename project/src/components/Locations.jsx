@@ -9,7 +9,7 @@ const locations = [
   {
     name: "Zona Norte de Natal",
     address: "Av. Paulistana, 2303A",
-    fullAddress: "Av. Paulistana, 2303A, Zona Norte, Natal - RN",
+    fullAddress: "Av. Paulistana, 2303A - Potengi, Natal - RN, 59108-120",
   },
 ];
 

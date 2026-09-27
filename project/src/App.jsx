@@ -6,8 +6,13 @@ import Benefits from "./components/Benefits";
 import BookingCalendar from "./components/BookingCalendar";
 import Locations from "./components/Locations";
 import Footer from "./components/Footer";
+import AdminPage from "./components/AdminPage";
 
 function App() {
+  if (typeof window !== "undefined" && window.location.pathname.startsWith("/admin")) {
+    return <AdminPage />;
+  }
+
   return (
     <div className="font-sans">
       <Header />
