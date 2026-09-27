@@ -1,5 +1,8 @@
-import { MapPin, Home } from "lucide-react";
+import { useState } from "react";
+import { MapPin, Home, Settings } from "lucide-react";
 import WhatsAppIcon from "./icons/WhatsAppIcon";
+import AdminLoginModal from "./AdminLoginModal";
+import { useAdminAuth } from "../context/AdminAuthContext";
 
 function InstagramIcon({ size = 16, className = "" }) {
   return (
@@ -23,6 +26,9 @@ function InstagramIcon({ size = 16, className = "" }) {
 }
 
 export default function Footer() {
+  const { isAdmin, logout } = useAdminAuth();
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
     <footer className="bg-navy-deep text-white/60 pt-14 pb-8">
       <div className="max-w-6xl mx-auto px-6">
@@ -87,16 +93,31 @@ export default function Footer() {
           <span>
             © {new Date().getFullYear()} Pedro Augusto Massoterapeuta. Todos os direitos reservados.
           </span>
-          <a
-            href="https://gabrielresume.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-white/35 hover:text-teal-bright transition-colors"
-          >
-            Site desenvolvido por Gabriel Ramos
-          </a>
+          <span className="flex items-center gap-4">
+            <a
+              href="https://gabrielresume.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-white/35 hover:text-teal-bright transition-colors"
+            >
+              Site desenvolvido por Gabriel Ramos
+            </a>
+            <button
+              type="button"
+              onClick={() => (isAdmin ? logout() : setShowLogin(true))}
+              aria-label={isAdmin ? "Sair do modo administrador" : "Configurações"}
+              title={isAdmin ? "Sair do modo administrador" : undefined}
+              className={`transition-colors ${
+                isAdmin ? "text-teal-bright" : "text-white/15 hover:text-white/40"
+              }`}
+            >
+              <Settings size={13} />
+            </button>
+          </span>
         </p>
       </div>
+
+      {showLogin && <AdminLoginModal onClose={() => setShowLogin(false)} />}
     </footer>
   );
 }
