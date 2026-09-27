@@ -1,5 +1,6 @@
-import { CalendarCheck, MapPin, MessageCircle } from "lucide-react";
+import { CalendarCheck, MapPin } from "lucide-react";
 import pedro from "../assets/pedro-foto.png";
+import WhatsAppIcon from "./icons/WhatsAppIcon";
 
 // soft fade so the photo blends into the background instead of cutting off abruptly
 const photoMask = {
@@ -34,7 +35,7 @@ function CTAButtons({ stacked = false }) {
         rel="noreferrer"
         className={`inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-6 md:px-7 py-3 md:py-3.5 text-sm font-semibold text-white/90 transition-all hover:bg-white/20 hover:scale-[1.02] active:scale-95 ${stacked ? "w-full" : ""}`}
       >
-        <MessageCircle size={16} />
+        <WhatsAppIcon size={15} />
         (84) 99668-5070
       </a>
     </div>

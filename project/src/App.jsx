@@ -4,6 +4,7 @@ import About from "./components/About";
 import Services from "./components/Services";
 import Benefits from "./components/Benefits";
 import BookingCalendar from "./components/BookingCalendar";
+import Locations from "./components/Locations";
 import Footer from "./components/Footer";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Services />
         <Benefits />
         <BookingCalendar />
+        <Locations />
       </main>
       <Footer />
     </div>

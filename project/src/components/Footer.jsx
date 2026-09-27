@@ -1,4 +1,5 @@
-import { MessageCircle, MapPin, Home } from "lucide-react";
+import { MapPin, Home } from "lucide-react";
+import WhatsAppIcon from "./icons/WhatsAppIcon";
 
 function InstagramIcon({ size = 16, className = "" }) {
   return (
@@ -20,11 +21,6 @@ function InstagramIcon({ size = 16, className = "" }) {
     </svg>
   );
 }
-
-const addresses = [
-  "Rua das Flores, 694, Nova Parnamirim, Parnamirim",
-  "Av. Paulistana, 2303A, Zona Norte, Natal",
-];
 
 export default function Footer() {
   return (
@@ -48,7 +44,7 @@ export default function Footer() {
                 className="h-9 w-9 grid place-items-center rounded-full border border-white/15 hover:border-teal-bright hover:text-teal-bright transition-colors"
                 aria-label="WhatsApp"
               >
-                <MessageCircle size={16} />
+                <WhatsAppIcon size={16} />
               </a>
               <a
                 href="https://www.instagram.com/pa.massoterapeuta/"
@@ -68,22 +64,22 @@ export default function Footer() {
             <a href="#servicos" className="hover:text-white transition-colors">Serviços</a>
             <a href="#beneficios" className="hover:text-white transition-colors">Benefícios</a>
             <a href="#agendamento" className="hover:text-white transition-colors">Agendamento</a>
+            <a href="#localizacao" className="hover:text-white transition-colors">Localização</a>
           </div>
 
-          {/* Addresses */}
-          <div id="localizacao" className="max-w-xs scroll-mt-24">
+          {/* Locations pointer */}
+          <div className="max-w-xs">
             <p className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] text-white/40 mb-3">
               <Home size={13} className="text-teal-bright" />
               ATENDE TAMBÉM A DOMICÍLIO
             </p>
-            <ul className="space-y-2.5 text-sm">
-              {addresses.map((a) => (
-                <li key={a} className="flex items-start gap-2">
-                  <MapPin size={15} className="text-teal-bright shrink-0 mt-0.5" />
-                  <span>{a}</span>
-                </li>
-              ))}
-            </ul>
+            <a
+              href="#localizacao"
+              className="inline-flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors"
+            >
+              <MapPin size={15} className="text-teal-bright shrink-0" />
+              Ver locais de atendimento
+            </a>
           </div>
         </div>
 
