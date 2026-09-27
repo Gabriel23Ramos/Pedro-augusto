@@ -1,9 +1,12 @@
 import { Redis } from "@upstash/redis";
 
-// Reads UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN, which Vercel
-// injects automatically once an Upstash Redis database is connected to
-// this project (Storage tab -> Create Database / Marketplace -> Redis).
-export const redis = Redis.fromEnv();
+// Vercel's Upstash integration named these KV_REST_API_URL / KV_REST_API_TOKEN
+// (legacy "Vercel KV" naming), rather than UPSTASH_REDIS_REST_URL/TOKEN, so we
+// build the client explicitly instead of relying on Redis.fromEnv().
+export const redis = new Redis({
+  url: process.env.KV_REST_API_URL,
+  token: process.env.KV_REST_API_TOKEN,
+});
 
 export const SCHEDULE_KEY = "pedro-augusto:schedule";
 
