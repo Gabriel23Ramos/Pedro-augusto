@@ -3,11 +3,13 @@ import { MapPin, Home, ArrowRight } from "lucide-react";
 const locations = [
   {
     name: "Nova Parnamirim",
-    address: "Rua das Flores, 694, Nova Parnamirim, Parnamirim - RN",
+    address: "Rua das Flores, 694",
+    fullAddress: "Rua das Flores, 694, Nova Parnamirim, Parnamirim - RN",
   },
   {
-    name: "Zona Norte, Natal",
-    address: "Av. Paulistana, 2303A, Zona Norte, Natal - RN",
+    name: "Zona Norte de Natal",
+    address: "Av. Paulistana, 2303A",
+    fullAddress: "Av. Paulistana, 2303A, Zona Norte, Natal - RN",
   },
 ];
 
@@ -36,7 +38,7 @@ export default function Locations() {
             >
               <iframe
                 title={`Mapa — ${loc.name}`}
-                src={`https://www.google.com/maps?q=${encodeURIComponent(loc.address)}&output=embed`}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(loc.fullAddress)}&output=embed`}
                 className="h-56 w-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -48,7 +50,7 @@ export default function Locations() {
                   {loc.address}
                 </p>
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.fullAddress)}`}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal hover:text-teal-bright transition-colors"

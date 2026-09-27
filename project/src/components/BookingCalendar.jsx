@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Clock, MessageCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Sparkles } from "lucide-react";
+import WhatsAppIcon from "./icons/WhatsAppIcon";
 
 const WEEKDAY_LABELS = ["D", "S", "T", "Q", "Q", "S", "S"];
 const MONTH_LABELS = [
@@ -7,6 +8,15 @@ const MONTH_LABELS = [
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
 ];
 const TIME_SLOTS = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"];
+const SERVICES = [
+  "Bambuterapia",
+  "Drenagem linfática",
+  "Liberação miofascial",
+  "Massagem desportiva",
+  "Massagem relaxante",
+  "Pedras quentes",
+  "Ventosaterapia",
+];
 const PHONE = "5584996685070";
 
 function startOfDay(d) {
@@ -27,6 +37,7 @@ export default function BookingCalendar() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [name, setName] = useState("");
+  const [service, setService] = useState("");
   const timeSlotsRef = useRef(null);
 
   const weeks = useMemo(() => {
@@ -65,11 +76,11 @@ export default function BookingCalendar() {
     const dateLabel = selectedDate
       ? `${selectedDate.getDate()} de ${MONTH_LABELS[selectedDate.getMonth()]}`
       : "";
-    const text = `Olá, Pedro! Meu nome é ${name || "___"}. Gostaria de agendar uma sessão para o dia ${dateLabel} às ${selectedTime}.`;
+    const text = `Olá, Pedro! Meu nome é ${name || "___"}. Gostaria de agendar uma sessão de ${service} para o dia ${dateLabel} às ${selectedTime}.`;
     return `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
   };
 
-  const canConfirm = selectedDate && selectedTime && name.trim().length > 1;
+  const canConfirm = selectedDate && selectedTime && service && name.trim().length > 1;
 
   return (
     <section id="agendamento" className="bg-mist py-20 md:py-28">
@@ -82,8 +93,8 @@ export default function BookingCalendar() {
             Escolha o melhor dia e horário para você
           </h2>
           <p className="mt-4 text-navy/65 leading-relaxed">
-            Selecione uma data disponível, o horário e confirme o agendamento
-            diretamente pelo WhatsApp.
+            Selecione uma data disponível, o horário, o serviço desejado e
+            confirme o agendamento diretamente pelo WhatsApp.
           </p>
         </div>
 
@@ -192,6 +203,25 @@ export default function BookingCalendar() {
               })}
             </div>
 
+            <label className="flex items-center gap-2 text-xs font-semibold text-white/60 mb-2">
+              <Sparkles size={13} className="text-teal-bright" />
+              QUAL SERVIÇO?
+            </label>
+            <select
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              className="mb-6 rounded-lg bg-white/10 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-teal-bright appearance-none"
+            >
+              <option value="" disabled className="text-navy">
+                Selecione um serviço
+              </option>
+              {SERVICES.map((s) => (
+                <option key={s} value={s} className="text-navy">
+                  {s}
+                </option>
+              ))}
+            </select>
+
             <label className="text-xs font-semibold text-white/60 mb-2">SEU NOME</label>
             <input
               value={name}
@@ -210,7 +240,7 @@ export default function BookingCalendar() {
                 ${canConfirm ? "bg-teal hover:bg-teal-bright hover:scale-[1.02] active:scale-95 text-white shadow-lg shadow-teal/20" : "bg-white/10 text-white/40 cursor-not-allowed"}
               `}
             >
-              <MessageCircle size={17} />
+              <WhatsAppIcon size={16} />
               Confirmar pelo WhatsApp
             </a>
           </div>

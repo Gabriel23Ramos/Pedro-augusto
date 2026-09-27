@@ -83,8 +83,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="pt-6 text-xs text-white/35">
-          © {new Date().getFullYear()} Pedro Augusto Massoterapeuta. Todos os direitos reservados.
+        <p className="pt-6 text-xs text-white/35 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <span>
+            © {new Date().getFullYear()} Pedro Augusto Massoterapeuta. Todos os direitos reservados.
+          </span>
+          <a
+            href="https://gabrielresume.vercel.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-white/35 hover:text-teal-bright transition-colors"
+          >
+            Site desenvolvido por Gabriel Ramos
+          </a>
         </p>
       </div>
     </footer>
