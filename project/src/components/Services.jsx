@@ -70,7 +70,7 @@ export default function Services() {
           {services.map(({ icon: Icon, image, title, text }) => (
             <div
               key={title}
-              className="group overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-navy/10"
+              className="group relative overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-navy/10"
             >
               <div className="relative h-44 overflow-hidden">
                 <img
@@ -80,10 +80,11 @@ export default function Services() {
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-navy/0 to-navy/0" />
-                <span className="absolute -bottom-5 left-5 flex h-11 w-11 items-center justify-center rounded-full bg-teal text-white shadow-md ring-4 ring-white">
-                  <Icon size={20} strokeWidth={1.8} />
-                </span>
               </div>
+
+              <span className="absolute top-[9.75rem] left-5 flex h-11 w-11 items-center justify-center rounded-full bg-teal text-white shadow-md ring-4 ring-white">
+                <Icon size={20} strokeWidth={1.8} />
+              </span>
 
               <div className="px-5 pb-6 pt-8">
                 <h3 className="font-display text-lg text-navy mb-1.5">{title}</h3>
