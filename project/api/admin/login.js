@@ -11,7 +11,6 @@ export default async function handler(req, res) {
   const { password } = req.body || {};
   const expected = process.env.ADMIN_PASSWORD || "";
 
-  // Small fixed delay to make brute-forcing slower, regardless of outcome.
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   if (!expected || typeof password !== "string" || password !== expected) {
