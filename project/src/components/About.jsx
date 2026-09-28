@@ -2,7 +2,7 @@ import logoCircular from "../assets/logo-circular.png";
 
 export default function About() {
   return (
-    <section id="sobre" className="bg-mist py-20 md:py-28">
+    <section id="sobre" className="relative -mt-px bg-mist py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[auto_1fr] items-center gap-12">
         <img
           src={logoCircular}
