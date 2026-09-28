@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Clock, Sparkles, ShieldCheck, Ban, MapPin } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Sparkles, ShieldCheck, Ban, MapPin, Check } from "lucide-react";
 import WhatsAppIcon from "./icons/WhatsAppIcon";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import {
@@ -294,11 +294,12 @@ export default function BookingCalendar() {
                   })}
                 </div>
 
-                <label className="flex items-center gap-2 text-xs font-semibold text-white/60 mb-1">
-                  <Sparkles size={13} className="text-teal-bright" />
-                  QUAIS SERVIÇOS? (pode escolher mais de um)
-                </label>
-                <div className="mb-6 mt-2 flex flex-wrap gap-2">
+                <div className="mb-2 flex items-center gap-2 text-xs font-semibold text-white/60">
+                  <Sparkles size={13} className="shrink-0 text-teal-bright" />
+                  QUAIS SERVIÇOS?
+                </div>
+                <p className="mb-3 text-[11px] text-white/40">Você pode escolher mais de um.</p>
+                <div className="mb-7 grid grid-cols-2 gap-2">
                   {SERVICES.map((sv) => {
                     const active = selectedServices.includes(sv);
                     return (
@@ -307,21 +308,22 @@ export default function BookingCalendar() {
                         key={sv}
                         onClick={() => toggleService(sv)}
                         aria-pressed={active}
-                        className={`rounded-full border px-3.5 py-2 text-xs font-medium transition-colors
+                        className={`flex min-h-[3rem] items-center justify-center gap-1.5 rounded-xl border px-2 py-2.5 text-center text-[13px] font-medium leading-tight transition-colors last:odd:col-span-2
                           ${active ? "border-teal bg-teal text-white" : "border-white/15 text-white/75 hover:border-teal-bright"}
                         `}
                       >
+                        {active && <Check size={13} strokeWidth={3} className="shrink-0" />}
                         {sv}
                       </button>
                     );
                   })}
                 </div>
 
-                <label className="flex items-center gap-2 text-xs font-semibold text-white/60 mb-1">
-                  <MapPin size={13} className="text-teal-bright" />
+                <div className="mb-3 flex items-center gap-2 text-xs font-semibold text-white/60">
+                  <MapPin size={13} className="shrink-0 text-teal-bright" />
                   ONDE VOCÊ PREFERE SER ATENDIDO?
-                </label>
-                <div className="mb-6 mt-2 flex flex-wrap gap-2">
+                </div>
+                <div className="mb-7 grid gap-2">
                   {PLACES.map((p) => {
                     const active = place === p.label;
                     return (
@@ -330,10 +332,17 @@ export default function BookingCalendar() {
                         key={p.label}
                         onClick={() => setPlace(p.label)}
                         aria-pressed={active}
-                        className={`rounded-full border px-3.5 py-2 text-xs font-medium transition-colors
-                          ${active ? "border-teal bg-teal text-white" : "border-white/15 text-white/75 hover:border-teal-bright"}
+                        className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-[13px] font-medium transition-colors
+                          ${active ? "border-teal bg-teal/20 text-white" : "border-white/15 text-white/75 hover:border-teal-bright"}
                         `}
                       >
+                        <span
+                          className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border ${
+                            active ? "border-teal-bright" : "border-white/30"
+                          }`}
+                        >
+                          {active && <span className="h-2 w-2 rounded-full bg-teal-bright" />}
+                        </span>
                         {p.label}
                       </button>
                     );
