@@ -7,7 +7,7 @@ const benefits = [
   "Redução da sensação de inchaço",
   "Relaxamento e redução do estresse",
   "Sensação de leveza e bem-estar",
-  "Terapia de calor para potencializar o relaxamento",
+  "Relaxamento profundo com o uso de pedras quentes",
 ];
 
 export default function Benefits() {
@@ -21,7 +21,7 @@ export default function Benefits() {
             O QUE UMA SESSÃO PODE PROPORCIONAR
           </p>
           <h2 className="font-display text-3xl md:text-4xl text-white leading-tight">
-            Benefícios que o corpo sente logo na primeira sessão
+            Benefícios que o seu corpo pode sentir
           </h2>
         </div>
 

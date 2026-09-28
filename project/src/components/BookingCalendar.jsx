@@ -21,7 +21,7 @@ const SERVICES = [
   "Ventosaterapia",
 ];
 const PLACES = [
-  { label: "Parnamirim", phrase: "no consultório em Nova Parnamirim" },
+  { label: "Nova Parnamirim", phrase: "no consultório em Nova Parnamirim" },
   { label: "Zona Norte de Natal", phrase: "no consultório na Zona Norte de Natal" },
   { label: "A domicílio", phrase: "a domicílio" },
 ];
