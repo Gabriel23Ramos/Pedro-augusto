@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Clock, Sparkles, ShieldCheck, Ban, MapPin, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Sparkles, ShieldCheck, Ban, MapPin, Check, Plus, X } from "lucide-react";
 import WhatsAppIcon from "./icons/WhatsAppIcon";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import {
@@ -42,7 +42,8 @@ export default function BookingCalendar() {
   const [name, setName] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
   const [place, setPlace] = useState("");
-  const [schedule, setSchedule] = useState({ blockedDays: [], blockedSlots: {} });
+  const [schedule, setSchedule] = useState({ blockedDays: [], blockedSlots: {}, slots: TIME_SLOTS });
+  const [newTime, setNewTime] = useState("");
   const [busy, setBusy] = useState(false);
   const timeSlotsRef = useRef(null);
 
@@ -70,6 +71,8 @@ export default function BookingCalendar() {
   };
 
   const isSameDay = (a, b) => a && b && a.getTime() === b.getTime();
+
+  const slots = schedule.slots?.length ? schedule.slots : TIME_SLOTS;
 
   const selectedKey = selectedDate ? formatDateKey(selectedDate) : null;
   const dayIsBlocked = selectedKey ? schedule.blockedDays.includes(selectedKey) : false;
@@ -122,6 +125,24 @@ export default function BookingCalendar() {
     }
   }
 
+  async function changeTimeList(type, time) {
+    if (!time) return;
+    setBusy(true);
+    try {
+      const r = await fetch("/api/schedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type, time }),
+      });
+      if (r.ok) {
+        setSchedule(await r.json());
+        if (type === "addTime") setNewTime("");
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <section id="agendamento" className="bg-mist py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-6">
@@ -146,9 +167,9 @@ export default function BookingCalendar() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8">
+        <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           {/* Calendar */}
-          <div className="bg-white rounded-2xl border border-navy/10 p-6 md:p-8">
+          <div className="bg-white rounded-2xl border border-navy/10 p-6 md:p-8 lg:sticky lg:top-28">
             <div className="flex items-center justify-between mb-6">
               <button
                 onClick={() => changeMonth(-1)}
@@ -254,7 +275,7 @@ export default function BookingCalendar() {
                   HORÁRIOS (clique pra bloquear/liberar)
                 </p>
                 <div className="grid grid-cols-3 gap-2.5">
-                  {TIME_SLOTS.map((t) => {
+                  {slots.map((t) => {
                     const blocked = bookedForSelected.includes(t);
                     return (
                       <button
@@ -270,11 +291,56 @@ export default function BookingCalendar() {
                     );
                   })}
                 </div>
+
+                <div className="mt-8 border-t border-white/10 pt-6">
+                  <p className="mb-1 text-xs font-semibold tracking-wide text-white/50">
+                    SEUS HORÁRIOS DE ATENDIMENTO
+                  </p>
+                  <p className="mb-4 text-[11px] text-white/40">
+                    Vale para todos os dias. Adicione ou remova os horários que você atende.
+                  </p>
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {slots.map((t) => (
+                      <span
+                        key={t}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-white/15 py-1.5 pl-3.5 pr-2 text-xs text-white/80"
+                      >
+                        {t}
+                        <button
+                          type="button"
+                          disabled={busy || slots.length <= 1}
+                          onClick={() => changeTimeList("removeTime", t)}
+                          aria-label={`Remover ${t}`}
+                          className="grid h-5 w-5 place-items-center rounded-full text-white/50 hover:bg-white/10 hover:text-red-300 disabled:opacity-30"
+                        >
+                          <X size={12} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="time"
+                      value={newTime}
+                      onChange={(e) => setNewTime(e.target.value)}
+                      className="min-w-0 flex-1 rounded-lg border border-white/15 bg-white/10 px-3 py-2.5 text-sm text-white [color-scheme:dark] focus:border-teal-bright focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      disabled={busy || !newTime}
+                      onClick={() => changeTimeList("addTime", newTime)}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-teal px-5 text-sm font-semibold text-white transition-colors hover:bg-teal-bright disabled:opacity-40"
+                    >
+                      <Plus size={14} />
+                      Adicionar
+                    </button>
+                  </div>
+                </div>
               </>
             ) : (
               <>
                 <div className="grid grid-cols-3 gap-2.5 mb-7">
-                  {TIME_SLOTS.map((t) => {
+                  {slots.map((t) => {
                     const booked = bookedForSelected.includes(t);
                     const active = selectedTime === t;
                     return (
