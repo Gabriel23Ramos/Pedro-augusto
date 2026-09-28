@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Clock, Sparkles, ShieldCheck, Ban } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Sparkles, ShieldCheck, Ban, MapPin } from "lucide-react";
 import WhatsAppIcon from "./icons/WhatsAppIcon";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import {
@@ -20,7 +20,18 @@ const SERVICES = [
   "Pedras quentes",
   "Ventosaterapia",
 ];
+const PLACES = [
+  { label: "Parnamirim", phrase: "no consultório em Nova Parnamirim" },
+  { label: "Zona Norte de Natal", phrase: "no consultório na Zona Norte de Natal" },
+  { label: "A domicílio", phrase: "a domicílio" },
+];
 const PHONE = "5584996685070";
+
+// ["A", "B", "C"] -> "A, B e C"
+function joinList(items) {
+  if (items.length <= 1) return items.join("");
+  return `${items.slice(0, -1).join(", ")} e ${items[items.length - 1]}`;
+}
 
 export default function BookingCalendar() {
   const { isAdmin } = useAdminAuth();
@@ -29,7 +40,8 @@ export default function BookingCalendar() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [name, setName] = useState("");
-  const [service, setService] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [place, setPlace] = useState("");
   const [schedule, setSchedule] = useState({ blockedDays: [], blockedSlots: {} });
   const [busy, setBusy] = useState(false);
   const timeSlotsRef = useRef(null);
@@ -67,11 +79,18 @@ export default function BookingCalendar() {
     const dateLabel = selectedDate
       ? `${selectedDate.getDate()} de ${MONTH_LABELS[selectedDate.getMonth()]}`
       : "";
-    const text = `Olá, Pedro! Meu nome é ${name || "___"}. Gostaria de agendar uma sessão de ${service} para o dia ${dateLabel} às ${selectedTime}.`;
+    const text = `Olá, Pedro! Meu nome é ${name || "___"}. Gostaria de agendar ${joinList(selectedServices)} para o dia ${dateLabel} às ${selectedTime}, ${PLACES.find((p) => p.label === place)?.phrase}.`;
     return `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
   };
 
-  const canConfirm = selectedDate && selectedTime && service && name.trim().length > 1;
+  const toggleService = (s) => {
+    setSelectedServices((prev) =>
+      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]
+    );
+  };
+
+  const canConfirm =
+    selectedDate && selectedTime && selectedServices.length > 0 && place && name.trim().length > 1;
 
   async function toggleDay(date) {
     const key = formatDateKey(date);
@@ -123,7 +142,7 @@ export default function BookingCalendar() {
           <p className="mt-4 text-navy/65 leading-relaxed">
             {isAdmin
               ? "Clique num dia pra bloquear/reabrir ele por inteiro, ou bloquear horários específicos. As mudanças já aparecem pros clientes na hora."
-              : "Selecione uma data disponível, o horário, o serviço desejado e confirme o agendamento diretamente pelo WhatsApp."}
+              : "Selecione uma data disponível, o horário, os serviços, o local, e confirme o agendamento diretamente pelo WhatsApp."}
           </p>
         </div>
 
@@ -275,24 +294,51 @@ export default function BookingCalendar() {
                   })}
                 </div>
 
-                <label className="flex items-center gap-2 text-xs font-semibold text-white/60 mb-2">
+                <label className="flex items-center gap-2 text-xs font-semibold text-white/60 mb-1">
                   <Sparkles size={13} className="text-teal-bright" />
-                  QUAL SERVIÇO?
+                  QUAIS SERVIÇOS? (pode escolher mais de um)
                 </label>
-                <select
-                  value={service}
-                  onChange={(e) => setService(e.target.value)}
-                  className="mb-6 rounded-lg bg-white/10 border border-white/15 px-4 py-3 text-sm text-white focus:outline-none focus:border-teal-bright appearance-none"
-                >
-                  <option value="" disabled className="text-navy">
-                    Selecione um serviço
-                  </option>
-                  {SERVICES.map((s) => (
-                    <option key={s} value={s} className="text-navy">
-                      {s}
-                    </option>
-                  ))}
-                </select>
+                <div className="mb-6 mt-2 flex flex-wrap gap-2">
+                  {SERVICES.map((sv) => {
+                    const active = selectedServices.includes(sv);
+                    return (
+                      <button
+                        type="button"
+                        key={sv}
+                        onClick={() => toggleService(sv)}
+                        aria-pressed={active}
+                        className={`rounded-full border px-3.5 py-2 text-xs font-medium transition-colors
+                          ${active ? "border-teal bg-teal text-white" : "border-white/15 text-white/75 hover:border-teal-bright"}
+                        `}
+                      >
+                        {sv}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <label className="flex items-center gap-2 text-xs font-semibold text-white/60 mb-1">
+                  <MapPin size={13} className="text-teal-bright" />
+                  ONDE VOCÊ PREFERE SER ATENDIDO?
+                </label>
+                <div className="mb-6 mt-2 flex flex-wrap gap-2">
+                  {PLACES.map((p) => {
+                    const active = place === p.label;
+                    return (
+                      <button
+                        type="button"
+                        key={p.label}
+                        onClick={() => setPlace(p.label)}
+                        aria-pressed={active}
+                        className={`rounded-full border px-3.5 py-2 text-xs font-medium transition-colors
+                          ${active ? "border-teal bg-teal text-white" : "border-white/15 text-white/75 hover:border-teal-bright"}
+                        `}
+                      >
+                        {p.label}
+                      </button>
+                    );
+                  })}
+                </div>
 
                 <label className="text-xs font-semibold text-white/60 mb-2">SEU NOME</label>
                 <input
