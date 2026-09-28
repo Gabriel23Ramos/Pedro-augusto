@@ -1,7 +1,5 @@
 import crypto from "crypto";
 
-// SESSION_SECRET is a server-only environment variable (set in Vercel),
-// used to sign the admin session cookie. It never reaches the browser.
 const SECRET = process.env.SESSION_SECRET || "";
 
 export function createSessionToken(hours = 12) {
